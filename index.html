@@ -67,8 +67,8 @@
                     <div class="flex justify-between items-center mb-2">
                         <label class="text-sm font-medium text-slate-300">Daily Electricity Usage</label>
                         <div class="relative">
-                            <input type="number" x-model.number="dailyKwh" class="w-24 bg-slate-950 border border-slate-700 rounded-lg px-3 py-1 text-right font-bold text-brand-500 focus:outline-none focus:border-brand-500" step="1" min="2" max="50">
-                            <span class="absolute right-2 top-1.5 text-xs text-slate-500 pointer-events-none">kWh</span>
+                            <input type="number" x-model.number="dailyKwh" class="w-28 bg-slate-950 border border-slate-700 rounded-lg pl-3 pr-12 py-1 text-right font-bold text-brand-500 focus:outline-none focus:border-brand-500" step="1" min="2" max="50">
+                            <span class="absolute right-3 top-1.5 text-xs text-slate-500 pointer-events-none">kWh</span>
                         </div>
                     </div>
                     <input type="range" x-model.number="dailyKwh" min="4" max="30" step="1" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand-500">
@@ -84,8 +84,8 @@
                     <div class="flex justify-between items-center mb-2">
                         <label class="text-sm font-medium text-slate-300">Electricity Tariff Unit Rate</label>
                         <div class="relative">
-                            <input type="number" x-model.number="tariffPence" class="w-24 bg-slate-950 border border-slate-700 rounded-lg px-3 py-1 text-right font-bold text-brand-500 focus:outline-none focus:border-brand-500" step="0.5" min="10" max="50">
-                            <span class="absolute right-2 top-1.5 text-xs text-slate-500 pointer-events-none">p/kWh</span>
+                            <input type="number" x-model.number="tariffPence" class="w-28 bg-slate-950 border border-slate-700 rounded-lg pl-3 pr-12 py-1 text-right font-bold text-brand-500 focus:outline-none focus:border-brand-500" step="0.5" min="10" max="50">
+                            <span class="absolute right-3 top-1.5 text-xs text-slate-500 pointer-events-none">p/kWh</span>
                         </div>
                     </div>
                     <input type="range" x-model.number="tariffPence" min="15" max="45" step="0.5" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand-500">
@@ -101,8 +101,8 @@
                     <div class="flex justify-between items-center mb-2">
                         <label class="text-sm font-medium text-slate-300">Solar PV System Size</label>
                         <div class="relative">
-                            <input type="number" x-model.number="solarKw" class="w-24 bg-slate-950 border border-slate-700 rounded-lg px-3 py-1 text-right font-bold text-brand-500 focus:outline-none focus:border-brand-500" step="0.5" min="2" max="15">
-                            <span class="absolute right-2 top-1.5 text-xs text-slate-500 pointer-events-none">kWp</span>
+                            <input type="number" x-model.number="solarKw" class="w-28 bg-slate-950 border border-slate-700 rounded-lg pl-3 pr-12 py-1 text-right font-bold text-brand-500 focus:outline-none focus:border-brand-500" step="0.5" min="2" max="15">
+                            <span class="absolute right-3 top-1.5 text-xs text-slate-500 pointer-events-none">kWp</span>
                         </div>
                     </div>
                     <input type="range" x-model.number="solarKw" min="2" max="12" step="0.5" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand-500">
@@ -118,8 +118,8 @@
                     <div class="flex justify-between items-center mb-2">
                         <label class="text-sm font-medium text-slate-300">Battery Storage Capacity</label>
                         <div class="relative">
-                            <input type="number" x-model.number="batteryKwh" class="w-24 bg-slate-950 border border-slate-700 rounded-lg px-3 py-1 text-right font-bold text-brand-500 focus:outline-none focus:border-brand-500" step="1" min="0" max="30">
-                            <span class="absolute right-2 top-1.5 text-xs text-slate-500 pointer-events-none">kWh</span>
+                            <input type="number" x-model.number="batteryKwh" class="w-28 bg-slate-950 border border-slate-700 rounded-lg pl-3 pr-12 py-1 text-right font-bold text-brand-500 focus:outline-none focus:border-brand-500" step="1" min="0" max="30">
+                            <span class="absolute right-3 top-1.5 text-xs text-slate-500 pointer-events-none">kWh</span>
                         </div>
                     </div>
                     <input type="range" x-model.number="batteryKwh" min="0" max="25" step="1" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand-500">
@@ -214,30 +214,24 @@
                 batteryKwh: 9.5,     // Popular battery capacity in kWh
 
                 get annualGenerationKwh() {
-                    // Approx 850 kWh per kWp generated annually in the UK climate
                     return this.solarKw * 850;
                 },
 
                 get estimatedCapex() {
-                    // Estimated capex: ~£1,400 per kWp solar + ~£600 per kWh battery storage
                     let baseSolar = this.solarKw * 1400;
                     let baseBattery = this.batteryKwh * 650;
-                    return Math.round(baseSolar + baseBattery + 1500); // 1500 inverter/scaffolding base
+                    return Math.round(baseSolar + baseBattery + 1500);
                 },
 
                 get annualSavings() {
                     let annualKwhUsed = this.dailyKwh * 365;
                     let gen = this.annualGenerationKwh;
-                    
-                    // Self-consumption ratio increases significantly with battery storage
-                    // Base solar self-consumption ~30%, with battery storage jumps to 75%+
                     let selfConsumptionRate = this.batteryKwh > 0 ? 0.78 : 0.35;
                     let selfConsumedKwh = Math.min(annualKwhUsed, gen * selfConsumptionRate);
                     let exportedKwh = Math.max(0, gen - selfConsumedKwh);
 
-                    // Financial savings from avoided bill + Smart Export Guarantee (SEG) at 12p/kWh
                     let avoidedCost = selfConsumedKwh * (this.tariffPence / 100);
-                    let exportRevenue = exportedKwh * 0.12; // 12p / kWh SEG
+                    let exportRevenue = exportedKwh * 0.12;
                     
                     return Math.round(avoidedCost + exportRevenue);
                 },
@@ -257,7 +251,6 @@
                 },
 
                 get tenYearNet() {
-                    // 10 years of savings minus upfront capex (assuming 0.5% annual degradation)
                     let totalDecadeSavings = this.annualSavings * 9.5; 
                     return Math.round(totalDecadeSavings - this.estimatedCapex);
                 },
