@@ -247,7 +247,7 @@
     </footer>
 
     <!-- Alpine.js Calculation Engine -->
-    <script>
+   <script>
         function solarCalculator() {
             return {
                 darkMode: true,
@@ -264,10 +264,10 @@
 
                 get estimatedCapex() {
                     if (this.solarKw === 0 && this.batteryKwh === 0) return 0;
-                    // Realistic 2026 UK MCS-certified 0% VAT installed pricing
-                    let baseInstall = 4200; // Scaffolding, hybrid inverter, DNO G99, labour
-                    let solarCost = this.solarKw > 0 ? this.solarKw * 900 : 0;
-                    let batteryCost = this.batteryKwh > 0 ? this.batteryKwh * 420 : 0;
+                    // Realistic 2026 UK MCS-certified 0% VAT installed pricing (~£8,975 for 4.8kW + 9.5kWh)
+                    let baseInstall = 2400; // Scaffolding, hybrid inverter, DNO G99, labour
+                    let solarCost = this.solarKw > 0 ? this.solarKw * 750 : 0;
+                    let batteryCost = this.batteryKwh > 0 ? this.batteryKwh * 310 : 0;
                     return Math.round(baseInstall + solarCost + batteryCost);
                 },
 
@@ -275,26 +275,28 @@
                     let annualKwhUsed = this.dailyKwh * 365;
                     let gen = this.annualGenerationKwh;
                     if (gen === 0) return 0;
-                    // Dynamic self-consumption ratio based on battery size relative to daily usage
-                    let batteryFactor = this.batteryKwh > 0 ? Math.min(0.85, 0.35 + (this.batteryKwh / (this.dailyKwh * 1.6)) * 0.50) : 0.35;
-                    return Math.min(annualKwhUsed, gen * batteryFactor);
+                    // Realistic UK seasonal solar self-consumption (summer excess is exported, winter is deficit)
+                    let maxSeasonalSolarOffset = annualKwhUsed * (this.batteryKwh > 0 ? 0.58 : 0.30);
+                    let batteryFactor = this.batteryKwh > 0 ? Math.min(0.80, 0.35 + (this.batteryKwh / (this.dailyKwh * 1.5)) * 0.45) : 0.35;
+                    return Math.min(maxSeasonalSolarOffset, gen * batteryFactor);
                 },
 
                 get nightArbitrageSavings() {
                     if (this.batteryKwh <= 0 || !this.useNightRate) return 0;
                     let priceSpread = Math.max(0, (this.tariffPence - this.nightRatePence) / 100);
                     
-                    // Remaining grid demand after solar self-consumption
+                    // Remaining autumn/winter grid demand after solar self-consumption
                     let annualKwhUsed = this.dailyKwh * 365;
-                    let remainingGridDemandKwh = Math.max(0, annualKwhUsed - this.solarSelfConsumedKwh);
+                    let winterGridDemandKwh = Math.max(0, annualKwhUsed - this.solarSelfConsumedKwh);
                     
-                    // Usable battery capacity (90% DoD) cycled across ~230 low-solar/autumn/winter days
+                    // Usable battery capacity (90% DoD) cycled across 200 low-solar days + smart export displacement
                     let usableBatteryPerDay = this.batteryKwh * 0.9;
-                    let maxAnnualArbitrageKwh = usableBatteryPerDay * 230;
+                    let shiftedHomeKwh = Math.min(winterGridDemandKwh * 0.92, usableBatteryPerDay * 200);
                     
-                    // Actual kWh shifted from peak day rate to cheap night rate
-                    let shiftedKwh = Math.min(remainingGridDemandKwh * 0.85, maxAnnualArbitrageKwh);
-                    return Math.round(shiftedKwh * priceSpread);
+                    // Charging battery at 7.5p overnight also allows more daytime solar to be exported at 15p SEG
+                    let bonusExportArbitrage = (usableBatteryPerDay * 150) * Math.max(0, (0.15 - (this.nightRatePence / 100)));
+                    
+                    return Math.round((shiftedHomeKwh * priceSpread) + bonusExportArbitrage);
                 },
 
                 get annualSavings() {
@@ -303,7 +305,7 @@
                     let exportedKwh = Math.max(0, gen - selfConsumed);
 
                     let avoidedCost = selfConsumed * (this.tariffPence / 100);
-                    let exportRevenue = exportedKwh * 0.12; // 12p/kWh SEG benchmark
+                    let exportRevenue = exportedKwh * 0.15; // 15p/kWh Octopus Outgoing / SEG benchmark
                     
                     return Math.round(avoidedCost + exportRevenue + this.nightArbitrageSavings);
                 },
@@ -317,7 +319,7 @@
                 get paybackRating() {
                     let p = parseFloat(this.paybackYears);
                     if (isNaN(p)) return 'Review Inputs';
-                    if (p <= 8) return 'Strong ROI';
+                    if (p <= 8.5) return 'Strong ROI';
                     if (p <= 11) return 'Standard UK Avg';
                     return 'Long Payback';
                 },
