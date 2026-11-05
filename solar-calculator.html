@@ -28,7 +28,7 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white" x-data="solarCalculator()">
     
-   <!-- Top Header Navigation -->
+    <!-- Top Header Navigation -->
     <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur sticky top-0 z-30">
         <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
             <!-- Clickable Logo back to Home -->
@@ -56,7 +56,7 @@
         </div>
     </header>
 
-    <!-- Main Content Container -->
+    <!-- Main Content Container (12-column grid: 7 cols inputs, 5 cols results) -->
     <main class="max-w-5xl mx-auto px-4 py-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         <!-- Left Column: Inputs Form (7 Cols) -->
@@ -138,7 +138,7 @@
                     </div>
                 </div>
 
-                <!-- Overnight Smart Tariff Battery Charging (Octopus Go / Intelligent / Cosy) -->
+                <!-- Overnight Smart Tariff Battery Charging -->
                 <div class="pt-4 border-t border-slate-800/80" x-show="batteryKwh > 0" x-transition>
                     <div class="flex items-center justify-between mb-3">
                         <div>
@@ -172,31 +172,8 @@
             </div>
         </div>
 
-        <!-- RESULTS CTA SECTION -->
-<div class="results-cta" style="text-align: center; margin: 30px 0;">
-  
-  <!-- Clear ad micro-label to comply with ASA guidance before clicking -->
-  <span style="display: block; font-size: 0.8rem; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">
-    Featured Partner [Ad]
-  </span>
-
-  <!-- Your Affiliate Button -->
-  <a 
-    id="affiliate-cta-btn"
-    href="PASTE_YOUR_AWIN_LINK_HERE" 
-    target="_blank" 
-    rel="sponsored noopener noreferrer" 
-    class="cta-button"
-    style="display: inline-block; padding: 14px 28px; background-color: #16a34a; color: #ffffff; font-weight: 600; text-decoration: none; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);"
-  >
-    Get Free MCS-Certified Quotes &rarr;
-  </a>
-
-  <!-- Micro-qualifier -->
-  <p style="font-size: 0.8rem; color: #9ca3af; margin-top: 8px;">
-    Compare quotes from vetted MCS installers. No obligation.
-  </p>
-</div>
+        <!-- Right Column: Results & Monetized CTA Section (5 Cols) -->
+        <div class="lg:col-span-5 space-y-6">
             
             <!-- Results Card -->
             <div class="bg-gradient-to-br from-slate-900 to-slate-900/90 border border-brand-500/30 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
@@ -243,20 +220,39 @@
                 </div>
 
                 <div class="mt-6 pt-4 border-t border-slate-800/80 text-[11px] text-slate-400 leading-relaxed">
-                    * Factoring in UK solar irradiance, estimated 0%-VAT installed system cost (<span class="text-slate-200 font-semibold" x-text="formatCurrency(estimatedCapex)"></span>), Smart Export Guarantee (SEG) at 12p/kWh, and <span x-text="batteryKwh > 0 && useNightRate ? 'off-peak overnight battery arbitrage.' : 'direct solar self-consumption.'"></span>
+                    * Factoring in UK solar irradiance, estimated 0%-VAT installed system cost (<span class="text-slate-200 font-semibold" x-text="formatCurrency(estimatedCapex)"></span>), Smart Export Guarantee (SEG) at 15p/kWh, and <span x-text="batteryKwh > 0 && useNightRate ? 'off-peak overnight battery arbitrage.' : 'direct solar self-consumption.'"></span>
                 </div>
             </div>
 
-            <!-- Embedded Affiliate Placeholder CTA Banner -->
-            <div class="bg-gradient-to-r from-emerald-950/60 to-slate-900 border border-emerald-500/30 rounded-3xl p-6 shadow-xl relative overflow-hidden">
-                <div class="absolute right-0 bottom-0 translate-x-4 translate-y-4 opacity-10 text-7xl select-none">☀️</div>
-                <div class="relative z-10">
-                    <span class="inline-block bg-emerald-500/20 text-emerald-300 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider mb-2">Verified UK Installers</span>
-                    <h4 class="font-bold text-base text-white mb-1">Compare 2026 Solar & Battery Installers</h4>
+            <!-- Primary Monetized Affiliate CTA Card -->
+            <div class="bg-gradient-to-r from-emerald-950/70 to-slate-900 border border-brand-500/40 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+                <div class="absolute right-0 bottom-0 translate-x-3 translate-y-3 opacity-10 text-7xl select-none">☀️</div>
+                <div class="relative z-10 text-center sm:text-left">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="inline-block bg-brand-500/20 text-brand-300 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                            Verified UK Installers
+                        </span>
+                        <span class="text-[10px] uppercase font-bold tracking-wider text-slate-500">
+                            Partner [Ad]
+                        </span>
+                    </div>
+                    
+                    <h4 class="font-bold text-base text-white mb-1">Compare 2026 Solar &amp; Battery Installers</h4>
                     <p class="text-xs text-slate-300 mb-4 leading-relaxed">Get up to 3 competitive, MCS-certified quotes from vetted local engineers across the UK with zero obligation.</p>
-                    <a href="#affiliate-link" @click.prevent="alert('Affiliate link placeholder clicked! In production, this redirects users to your pre-vetted partner network or affiliate offer URL.')" class="block w-full py-3 px-4 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold rounded-xl text-center shadow-lg shadow-emerald-500/20 transition transform active:scale-95 text-sm">
-                        Get Free MCS-Certified Quotes ➔
+                    
+                    <a 
+                        id="affiliate-cta-btn"
+                        href="PASTE_YOUR_AWIN_LINK_HERE" 
+                        target="_blank" 
+                        rel="sponsored noopener noreferrer" 
+                        class="block w-full py-3.5 px-4 bg-brand-500 hover:bg-brand-600 text-slate-950 font-bold rounded-xl text-center shadow-lg shadow-brand-500/20 transition transform active:scale-95 text-sm"
+                    >
+                        Get Free MCS-Certified Quotes &rarr;
                     </a>
+                    
+                    <p class="text-[11px] text-slate-400 mt-2 text-center">
+                        Free service. No obligation. MCS-certified engineers only.
+                    </p>
                 </div>
             </div>
 
@@ -264,22 +260,36 @@
 
     </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-slate-800 bg-slate-900/40 py-6 text-center text-xs text-slate-500 mt-12">
-        <p>© 2026 UK EcoCalc Hub. For estimation purposes based on typical Ofgem benchmarks. Always consult an MCS-certified professional for exact property engineering surveys.</p>
+    <!-- ASA & AWIN Compliant Legal Footer -->
+    <footer class="border-t border-slate-800 bg-slate-900/60 py-8 px-4 text-center text-xs text-slate-500 mt-12">
+        <div class="max-w-4xl mx-auto space-y-3">
+            <p class="space-x-4 text-slate-400 font-medium">
+                <a href="/" class="hover:text-brand-400 transition">Home</a>
+                <span>•</span>
+                <a href="/solar-calculator" class="hover:text-brand-400 transition">Solar & Battery Calculator</a>
+                <span>•</span>
+                <a href="/heat-pump" class="hover:text-brand-400 transition">Heat Pump Calculator</a>
+            </p>
+            <p class="max-w-2xl mx-auto text-slate-400 leading-relaxed text-[11px]">
+                <strong class="text-slate-300">Commercial Disclosure:</strong> ecocalcuk.co.uk is an independent calculations tool. We may receive financial compensation or commission from our partners when you click links or submit quote requests via this service. This does not impact our calculation models, which are derived from standard UK insolation data, Energy Saving Trust assumptions, and published Ofgem price caps.
+            </p>
+            <p class="text-[10px] text-slate-600">
+                &copy; 2026 UK EcoCalc Hub. All rights reserved. Calculations are estimates only and do not constitute certified financial or survey advice.
+            </p>
+        </div>
     </footer>
 
     <!-- Alpine.js Calculation Engine -->
-   <script>
+    <script>
         function solarCalculator() {
             return {
                 darkMode: true,
                 dailyKwh: 7.5,          // Ofgem medium UK household daily kWh (~2,737 kWh/yr)
-                tariffPence: 26.11,     // Ofgem 2026 price cap benchmark (p/kWh)
-                solarKw: 4.8,           // Typical domestic system size in kWp
-                batteryKwh: 9.5,        // Popular battery capacity in kWh
-                useNightRate: true,     // Smart tariff overnight battery charging enabled by default
-                nightRatePence: 7.5,    // Typical EV / Smart overnight tariff (e.g. Intelligent Octopus Go)
+                tariffPence: 26.11,      // Ofgem 2026 price cap benchmark (p/kWh)
+                solarKw: 4.8,            // Typical domestic system size in kWp
+                batteryKwh: 9.5,         // Popular battery capacity in kWh
+                useNightRate: true,      // Smart tariff overnight battery charging enabled by default
+                nightRatePence: 7.5,     // Typical EV / Smart overnight tariff (e.g. Intelligent Octopus Go)
 
                 get annualGenerationKwh() {
                     return this.solarKw * 850;
