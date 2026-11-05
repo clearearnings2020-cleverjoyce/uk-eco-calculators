@@ -35,14 +35,13 @@
     <!-- Top Header Navigation -->
     <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur sticky top-0 z-30">
         <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
-            <!-- Clickable Logo back to Home -->
             <a href="/" class="flex items-center space-x-3 group focus:outline-none">
                 <div class="bg-brand-500 text-slate-950 p-2 rounded-xl font-black text-xl tracking-tight flex items-center justify-center w-10 h-10 shadow-lg shadow-brand-500/20 group-hover:scale-105 transition">
                     ⚡
                 </div>
                 <div>
                     <h1 class="font-bold text-lg tracking-tight group-hover:text-brand-400 transition">UK EcoCalc <span class="text-brand-500 text-xs px-2 py-0.5 rounded-full bg-brand-500/10 border border-brand-500/25 ml-1 font-semibold uppercase">2026 Model</span></h1>
-                    <p class="text-xs text-slate-400">Ofgem-Aligned Solar & Battery Return Estimator</p>
+                    <p class="text-xs text-slate-400">Ofgem-Aligned Domestic Energy Return Estimators</p>
                 </div>
             </a>
 
@@ -60,7 +59,7 @@
         </div>
     </header>
 
-    <!-- Main Content Container -->
+    <!-- Main Content Container (12-column grid: 7 cols inputs, 5 cols results) -->
     <main class="max-w-5xl mx-auto px-4 py-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         <!-- Left Column: Inputs Form (7 Cols) -->
@@ -144,31 +143,8 @@
             </div>
         </div>
 
-        <!-- RESULTS CTA SECTION -->
-<div class="results-cta" style="text-align: center; margin: 30px 0;">
-  
-  <!-- Clear ad micro-label to comply with ASA guidance before clicking -->
-  <span style="display: block; font-size: 0.8rem; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">
-    Featured Partner [Ad]
-  </span>
-
-  <!-- Your Affiliate Button -->
-  <a 
-    id="affiliate-cta-btn"
-    href="PASTE_YOUR_AWIN_LINK_HERE" 
-    target="_blank" 
-    rel="sponsored noopener noreferrer" 
-    class="cta-button"
-    style="display: inline-block; padding: 14px 28px; background-color: #16a34a; color: #ffffff; font-weight: 600; text-decoration: none; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);"
-  >
-    Get Free MCS-Certified Quotes &rarr;
-  </a>
-
-  <!-- Micro-qualifier -->
-  <p style="font-size: 0.8rem; color: #9ca3af; margin-top: 8px;">
-    Compare quotes from vetted MCS installers. No obligation.
-  </p>
-</div>
+        <!-- Right Column: Results & CTA Section (5 Cols) -->
+        <div class="lg:col-span-5 space-y-6">
             
             <!-- Results Card -->
             <div class="bg-gradient-to-br from-slate-900 to-slate-900/90 border border-accent-500/30 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
@@ -176,7 +152,7 @@
 
                 <h3 class="text-sm uppercase tracking-wider text-accent-400 font-bold mb-4">Annual Running Cost Comparison</h3>
                 
-                <div class="space-y-5">
+                <div class="space-y-4">
                     <!-- Heat Pump Annual Cost -->
                     <div class="bg-slate-950/60 border border-slate-800/80 rounded-2xl p-4 flex items-center justify-between">
                         <div>
@@ -212,20 +188,39 @@
                 </div>
 
                 <div class="mt-6 pt-4 border-t border-slate-800/80 text-[11px] text-slate-400 leading-relaxed">
-                    * Factors in a standard gas boiler efficiency of 88% and heat pump coefficient of performance (SCOP). Assumes £7,500 BUS grant deduction for initial capital comparisons.
+                    * Factors in standard boiler efficiency of 88% and heat pump coefficient of performance (SCOP). Assumes £7,500 BUS grant deduction for initial capital comparisons.
                 </div>
             </div>
 
-            <!-- Embedded Affiliate Placeholder CTA Banner -->
-            <div class="bg-gradient-to-r from-blue-950/60 to-slate-900 border border-accent-500/30 rounded-3xl p-6 shadow-xl relative overflow-hidden">
-                <div class="absolute right-0 bottom-0 translate-x-4 translate-y-4 opacity-10 text-7xl select-none">🏡</div>
-                <div class="relative z-10">
-                    <span class="inline-block bg-accent-500/20 text-accent-300 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider mb-2">MCS Accredited Network</span>
-                    <h4 class="font-bold text-base text-white mb-1">Check Heat Pump Suitability & BUS Grant</h4>
-                    <p class="text-xs text-slate-300 mb-4 leading-relaxed">Find out if your property qualifies for the £7,500 Boiler Upgrade Scheme and get fixed-price installation quotes.</p>
-                    <a href="#affiliate-link" @click.prevent="alert('Affiliate link placeholder clicked! In production, this routes users to your vetted heat pump installer affiliate partner.')" class="block w-full py-3 px-4 bg-accent-500 hover:bg-accent-600 text-slate-950 font-bold rounded-xl text-center shadow-lg shadow-accent-500/20 transition transform active:scale-95 text-sm">
-                        Check Grant & Get Quotes ➔
+            <!-- Primary Monetized Affiliate CTA Card -->
+            <div class="bg-gradient-to-r from-blue-950/70 to-slate-900 border border-brand-500/40 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+                <div class="absolute right-0 bottom-0 translate-x-3 translate-y-3 opacity-10 text-7xl select-none">🏡</div>
+                <div class="relative z-10 text-center sm:text-left">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="inline-block bg-brand-500/20 text-brand-300 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                            MCS Accredited Network
+                        </span>
+                        <span class="text-[10px] uppercase font-bold tracking-wider text-slate-500">
+                            Partner [Ad]
+                        </span>
+                    </div>
+                    
+                    <h4 class="font-bold text-base text-white mb-1">Check Heat Pump Suitability &amp; £7,500 Grant</h4>
+                    <p class="text-xs text-slate-300 mb-4 leading-relaxed">Compare fixed-price quotes from vetted installers and confirm your Boiler Upgrade Scheme eligibility.</p>
+                    
+                    <a 
+                        id="affiliate-cta-btn"
+                        href="PASTE_YOUR_AWIN_LINK_HERE" 
+                        target="_blank" 
+                        rel="sponsored noopener noreferrer" 
+                        class="block w-full py-3.5 px-4 bg-brand-500 hover:bg-brand-600 text-slate-950 font-bold rounded-xl text-center shadow-lg shadow-brand-500/20 transition transform active:scale-95 text-sm"
+                    >
+                        Get Free Heat Pump Quotes &rarr;
                     </a>
+                    
+                    <p class="text-[11px] text-slate-400 mt-2 text-center">
+                        Free service. No obligation. MCS-certified engineers only.
+                    </p>
                 </div>
             </div>
 
@@ -233,9 +228,23 @@
 
     </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-slate-800 bg-slate-900/40 py-6 text-center text-xs text-slate-500 mt-12">
-        <p>© 2026 UK EcoCalc Hub. Calculations based on Ofgem price cap energy benchmarks and Energy Saving Trust performance assumptions.</p>
+    <!-- ASA & AWIN Compliant Legal Footer -->
+    <footer class="border-t border-slate-800 bg-slate-900/60 py-8 px-4 text-center text-xs text-slate-500 mt-12">
+        <div class="max-w-4xl mx-auto space-y-3">
+            <p class="space-x-4 text-slate-400 font-medium">
+                <a href="/" class="hover:text-brand-400 transition">Home</a>
+                <span>•</span>
+                <a href="/solar-calculator" class="hover:text-brand-400 transition">Solar & Battery Calculator</a>
+                <span>•</span>
+                <a href="/heat-pump" class="hover:text-brand-400 transition">Heat Pump Calculator</a>
+            </p>
+            <p class="max-w-2xl mx-auto text-slate-400 leading-relaxed text-[11px]">
+                <strong class="text-slate-300">Commercial Disclosure:</strong> ecocalcuk.co.uk is an independent calculations tool. We may receive financial compensation or commission from our partners when you click links or submit quote requests via this service. This does not impact our calculation models, which are derived from standard UK insolation data, Energy Saving Trust assumptions, and published Ofgem price caps.
+            </p>
+            <p class="text-[10px] text-slate-600">
+                &copy; 2026 UK EcoCalc Hub. All rights reserved. Calculations are estimates only and do not constitute certified financial or survey advice.
+            </p>
+        </div>
     </footer>
 
     <!-- Alpine.js Calculation Engine -->
@@ -243,10 +252,10 @@
         function heatPumpCalculator() {
             return {
                 darkMode: true,
-                annualKwhHeat: 15000,    // Average annual UK household heat demand
-                scop: 3.2,               // Seasonal Coefficient of Performance
-                electricityPence: 22.0,  // Specialized heat pump tariff average (p/kWh)
-                gasPence: 6.8,           // Ofgem gas price cap benchmark (p/kWh)
+                annualKwhHeat: 15000,
+                scop: 3.2,
+                electricityPence: 22.0,
+                gasPence: 6.8,
 
                 get heatPumpAnnualCost() {
                     let electricityNeeded = this.annualKwhHeat / this.scop;
@@ -254,7 +263,6 @@
                 },
 
                 get gasAnnualCost() {
-                    // Assuming average 88% efficiency for a standard modern gas condensing boiler
                     let gasNeeded = this.annualKwhHeat / 0.88;
                     return Math.round(gasNeeded * (this.gasPence / 100));
                 },
